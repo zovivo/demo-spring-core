@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.demo.spring.model.Book" table="book">
+    <id name="id">
+        <generator class="native"></generator>
+    </id>
+
+    <property name="title" column="title" type="java.lang.String" ></property>
+    <property name="year" column="year" type="java.lang.Integer" ></property>
+    <property name="publisher" column="publisher" type="java.lang.String" ></property>
+    <property name="cost" column="cost" type="java.lang.Double"></property>
+
+    <list name="authors" lazy="false" fetch="select" inverse="true" table="author_book">
+        <key column="bookId" not-null="true"/>
+        <list-index column="id" base="1"/>
+        <many-to-many column="authorId" class="com.demo.spring.model.Author"/>
+    </list>
+    </class>
+
+</hibernate-mapping>

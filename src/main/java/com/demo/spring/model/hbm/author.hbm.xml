@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.demo.spring.model.Author" table="author">
+        <id name="id">
+            <generator class="native"></generator>
+        </id>
+
+        <property name="name" column="name" type="java.lang.String" ></property>
+        <property name="gender" column="gender" type="java.lang.Integer" ></property>
+        <property name="email" column="email" type="java.lang.String" ></property>
+
+        <list name="books" lazy="false" fetch="select" cascade="all" inverse="false" table="author_book">
+            <key column="authorId" not-null="true"/>
+            <list-index column="id" base="1"/>
+            <many-to-many column="bookId" class="com.demo.spring.model.Book"/>
+        </list>
+    </class>
+
+</hibernate-mapping>
