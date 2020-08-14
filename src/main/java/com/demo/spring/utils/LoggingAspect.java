@@ -1,17 +1,38 @@
 package com.demo.spring.utils;
 
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
 
-@Aspect
 public class LoggingAspect {
 
-    @Before("execution(* addC*(..))")
     public void logBefore(JoinPoint joinPoint) {
         System.err.println("******");
+        System.err.println("class name: " + joinPoint.getTarget().getClass());
+        System.err.println("method name :)))) : " + joinPoint.getSignature().getName());
         System.err.println("logBefore() is running!");
-        System.err.println("testing Aspect :)))) : " + joinPoint.getSignature().getName());
+        System.err.println("******");
+    }
+
+    public void logAfter(JoinPoint joinPoint) {
+        System.err.println("******");
+        System.err.println("class name: " + joinPoint.getTarget().getClass());
+        System.err.println("method name :)))) : " + joinPoint.getSignature().getName());
+        System.err.println("logAfter() is running!");
+        System.err.println("******");
+    }
+
+    public void logAfterReturning(JoinPoint joinPoint) {
+        System.err.println("******");
+        System.err.println("class name: " + joinPoint.getTarget().getClass());
+        System.err.println("method name :)))) : " + joinPoint.getSignature().getName());
+        System.err.println("logAfterReturning() is running!");
+        System.err.println("******");
+    }
+
+    public void logAfterThrowing(JoinPoint joinPoint) {
+        System.err.println("******");
+        System.err.println("class name: " + joinPoint.getTarget().getClass());
+        System.err.println("method name :)))) : " + joinPoint.getSignature().getName());
+        System.err.println("logAfterThrowing() is running!");
         System.err.println("******");
     }
 

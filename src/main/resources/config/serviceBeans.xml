@@ -5,5 +5,6 @@
 
     <bean id="authorService" class="com.demo.spring.service.impl.AuthorServiceImpl">
         <property name="authorDAO" ref="authorRepository"></property>
+        <property name="transactionManager" ref="transactionManager"></property>
     </bean>
 </beans>

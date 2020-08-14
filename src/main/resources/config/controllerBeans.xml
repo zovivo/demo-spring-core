@@ -2,7 +2,9 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
-    <bean id="authorController" class="com.demo.spring.controller.AuthorController">
+    <bean id="authorControllerPrototype" class="com.demo.spring.controller.AuthorController" scope="prototype">
+    </bean>
+    <bean id="authorController" class="com.demo.spring.controller.AuthorController" scope="singleton">
         <property name="authorService" ref="authorService"></property>
     </bean>
 </beans>

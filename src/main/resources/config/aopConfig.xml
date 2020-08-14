@@ -1,0 +1,39 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop-3.0.xsd ">
+
+    <aop:aspectj-autoproxy/>
+
+    <bean id="customerBo" class="com.demo.spring.utils.CustomerBoImpl"/>
+
+    <!-- Aspect -->
+    <bean id="logAspect" class="com.demo.spring.utils.LoggingAspect"/>
+
+    <aop:config>
+
+        <aop:aspect id="aspectLogging" ref="logAspect">
+
+            <!-- @Before -->
+            <aop:pointcut id="pointCutBefore" expression="execution(* com.demo.spring.controller.AuthorController.creat*(..))"/>
+            <aop:before method="logBefore" pointcut-ref="pointCutBefore"/>
+
+            <!-- @After -->
+            <aop:pointcut id="pointCutAfter" expression="within(com.demo.spring.service.impl.AuthorServiceImpl)"/>
+            <aop:before method="logAfter" pointcut-ref="pointCutAfter"/>
+
+            <!-- @AfterReturning -->
+            <aop:pointcut id="pointCutAfterReturning" expression="target (com.demo.spring.repository.AuthorDAO)"/>
+            <aop:after-returning method="logAfterReturning" returning="result" pointcut-ref="pointCutAfterReturning"/>
+
+            <!-- @AfterThrowing -->
+            <aop:pointcut id="pointCutAfterThrowing" expression="execution(* addCu*(..))"/>
+            <aop:after-throwing method="logAfterThrowing" throwing="error" pointcut-ref="pointCutAfterThrowing"/>
+        </aop:aspect>
+    </aop:config>
+
+
+</beans>
