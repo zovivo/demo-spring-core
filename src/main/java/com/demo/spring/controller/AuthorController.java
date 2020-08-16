@@ -2,31 +2,33 @@ package com.demo.spring.controller;
 
 import com.demo.spring.model.Author;
 import com.demo.spring.service.AuthorService;
+import org.apache.log4j.Logger;
 
 public class AuthorController {
 
     private AuthorService authorService;
     private String beanScopeMessage;
+    private Logger logger = Logger.getLogger(AuthorController.class);
 
-    public Author findById(Long id){
+    public Author findById(Long id) {
         return authorService.find(id);
     }
 
-    public Author create(Author author){
+    public Author create(Author author) throws Exception {
+        author = authorService.create(author);
+        return author;
+    }
 
+    public Author update(Author author) {
         try {
-           author = authorService.create(author);
-        }catch (Exception e){
-            System.out.println(e);
+            author = authorService.update(author);
+        } catch (Exception e) {
+            logger.info(e);
         }
         return author;
     }
 
-    public Author update(Author author){
-        return authorService.update(author);
-    }
-
-    public int delete(Author author){
+    public int delete(Author author) {
         return authorService.delete(author);
     }
 

@@ -3,6 +3,7 @@ package com.demo.spring.service.impl;
 import com.demo.spring.model.Author;
 import com.demo.spring.repository.AuthorDAO;
 import com.demo.spring.service.AuthorService;
+import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.transaction.annotation.Propagation;
@@ -26,17 +27,25 @@ public class AuthorServiceImpl implements AuthorService {
         return authorDAO.findById(id);
     }
 
-    @Transactional(rollbackFor = Exception.class)
     @Override
-    public Author create(Author author) throws Exception{
-        author = authorDAO.save(author);
-        int a = 1/0;
+    public Author create(Author author) throws Exception {
+        try {
+            author = authorDAO.save(author);
+            if (author.getName().equals("Nguyen Viet ngoc Quang"))
+                throw new Exception("Too weak and short");
+        }catch (Exception e){
+        }
         return author;
     }
 
     @Override
-    public Author update(Author author) {
-        return null;
+    @Transactional( rollbackFor = Exception.class)
+    public Author update(Author author) throws Exception {
+        author = authorDAO.update(author);
+        if (author.getName().equals("Nguyen Viet ngoc Quang")) {
+            throw new Exception("Too weak and short");
+        }
+        return author;
     }
 
     @Override

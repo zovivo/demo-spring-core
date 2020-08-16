@@ -21,12 +21,10 @@ public class Main {
         ApplicationContext context = new ClassPathXmlApplicationContext("config/applicationContext.xml", "config/hibernateConfig.xml", "config/aopConfig.xml", "config/controllerBeans.xml", "config/serviceBeans.xml", "config/repositoryBeans.xml");
 //        displayAllBeans(context);
         createData(context);
-        AuthorController authorController = (AuthorController) context.getBean("authorController");
-        Author author = authorController.findById(1L);
-        System.err.println("author: " + author);
-        testBeanScope(context);
+//        testBeanScope(context);
 
         testAOP(context);
+//        testTransaction(context);
     }
 
     public static void testBeanScope(ApplicationContext context) {
@@ -49,9 +47,20 @@ public class Main {
 
     public static void testAOP(ApplicationContext context) {
         System.out.println("=======Test AOP Spring=======");
-        CustomerBo customer = (CustomerBo) context.getBean("customerBo");
-        customer.addCustomer();
+//        createData(context);
+        AuthorController authorController = (AuthorController) context.getBean("authorController");
+        Author author = authorController.findById(1L);
+        System.err.println("author: " + author);
         System.out.println("=======Test AOP Spring=======");
+    }
+
+    public static void testTransaction(ApplicationContext applicationContext){
+        System.out.println("=======Test Transaction=======");
+        AuthorController authorController = (AuthorController) applicationContext.getBean("authorController");
+        Author author = authorController.findById(1L);
+        author.setGender(2);
+        authorController.update(author);
+        System.out.println("=======Test Transaction=======");
     }
 
     public static void displayAllBeans(ApplicationContext applicationContext) {
@@ -63,12 +72,7 @@ public class Main {
 
     public static void createData(ApplicationContext context) {
         AuthorController authorController = (AuthorController) context.getBean("authorController");
-//        SessionFactory sessionFactory = context.getBean("sessionFactory", SessionFactory.class);
-//        Session session = sessionFactory.openSession();
-//        Transaction transaction = null;
-
         try {
-//            transaction = session.beginTransaction();
             Author author = new Author();
             author.setName("Nguyen Viet ngoc Quang");
             author.setEmail("boiz_dan_phuong@gmail.com");
@@ -79,11 +83,7 @@ public class Main {
             books.addAll(Arrays.asList(book1, book2));
             author.setBooks(books);
             authorController.create(author);
-//            session.save(author);
-//            transaction.commit();
         } catch (Exception e) {
-//            logger.error("Roll back!!!");
-//            transaction.rollback();
             logger.error(e.getMessage(), e);
         }
     }

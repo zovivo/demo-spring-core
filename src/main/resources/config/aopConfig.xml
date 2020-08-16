@@ -7,9 +7,6 @@
 	http://www.springframework.org/schema/aop/spring-aop-3.0.xsd ">
 
     <aop:aspectj-autoproxy/>
-
-    <bean id="customerBo" class="com.demo.spring.utils.CustomerBoImpl"/>
-
     <!-- Aspect -->
     <bean id="logAspect" class="com.demo.spring.utils.LoggingAspect"/>
 
@@ -30,7 +27,7 @@
             <aop:after-returning method="logAfterReturning" returning="result" pointcut-ref="pointCutAfterReturning"/>
 
             <!-- @AfterThrowing -->
-            <aop:pointcut id="pointCutAfterThrowing" expression="execution(* addCu*(..))"/>
+            <aop:pointcut id="pointCutAfterThrowing" expression="execution(* create*(..))"/>
             <aop:after-throwing method="logAfterThrowing" throwing="error" pointcut-ref="pointCutAfterThrowing"/>
         </aop:aspect>
     </aop:config>
